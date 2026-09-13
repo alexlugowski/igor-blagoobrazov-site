@@ -1,0 +1,55 @@
+{
+  "avatarUrl": "https://via.placeholder.com/240x310/1b3b2b/ffffff?text=Dr+Igor",
+  "galleryPhotos": [
+    { "src": "https://via.placeholder.com/400x400/1b3b2b/ffffff?text=Gabinet", "caption_pl": "Gabinet Warszawa", "caption_fr": "Cabinet Varsovie", "caption_ru": "Кабинет в Варшаве", "caption_en": "Warsaw Office" },
+    { "src": "https://via.placeholder.com/300x225/234835/ffffff?text=Akupunktura", "caption_pl": "Akupunktura", "caption_fr": "Acupuncture", "caption_ru": "Акупунктура", "caption_en": "Acupuncture" },
+    { "src": "https://via.placeholder.com/300x225/3b6e52/ffffff?text=Konsultacja", "caption_pl": "Konsultacja", "caption_fr": "Consultation", "caption_ru": "Консультация", "caption_en": "Consultation" },
+    { "src": "https://via.placeholder.com/300x225/2e5740/ffffff?text=Gabinet+Zabiegowy", "caption_pl": "Gabinet zabiegowy", "caption_fr": "Salle de soins", "caption_ru": "Процедурный кабинет", "caption_en": "Treatment room" }
+  ],
+  "galleryDocuments": [
+    { "src": "https://via.placeholder.com/400x400/1b3b2b/ffffff?text=Dyplom", "caption_pl": "Dyplom lekarski", "caption_fr": "Diplôme de médecine", "caption_ru": "Диплом врача", "caption_en": "Medical diploma" },
+    { "src": "https://via.placeholder.com/300x225/234835/ffffff?text=Akupunktura", "caption_pl": "Certyfikat akupunktury", "caption_fr": "Certificat d'acupuncture", "caption_ru": "Сертификат по акупунктуре", "caption_en": "Acupuncture certificate" },
+    { "src": "https://via.placeholder.com/300x225/3b6e52/ffffff?text=ZIW+RP", "caption_pl": "Podziękowanie ZIW RP", "caption_fr": "Remerciement — Assoc. des Invalides de Guerre", "caption_ru": "Благодарность от Союза инвалидов войны РП", "caption_en": "Thank-you letter, Polish War Invalids Assoc." }
+  ],
+  "blogPosts": [
+    {
+      "type": "youtube",
+      "url": "https://www.youtube.com/@example-channel",
+      "source": "YouTube",
+      "title_pl": "Jak działa akupunktura na bóle kręgosłupa",
+      "title_fr": "Comment l'acupuncture agit sur les douleurs vertébrales",
+      "title_ru": "Как акупунктура помогает при болях в позвоночнике",
+      "title_en": "How acupuncture helps with spinal pain",
+      "desc_pl": "Krótkie wyjaśnienie mechanizmu działania igłoterapii w bólach przewlekłych.",
+      "desc_fr": "Une explication du mécanisme de l'acupuncture dans les douleurs chroniques.",
+      "desc_ru": "Краткое объяснение механизма акупунктуры при хронических болях.",
+      "desc_en": "A short explanation of how needle therapy works for chronic pain."
+    },
+    {
+      "type": "article",
+      "url": "#",
+      "source": "Blog",
+      "title_pl": "Qigong jako profilaktyka nawrotów bólu",
+      "title_fr": "Le Qigong en prévention des récidives",
+      "title_ru": "Цигун для профилактики рецидивов боли",
+      "title_en": "Qigong for preventing recurring pain",
+      "desc_pl": "Prosty zestaw ćwiczeń oddechowych, który można wykonywać w domu.",
+      "desc_fr": "Un ensemble simple d'exercices respiratoires à faire chez soi.",
+      "desc_ru": "Простой комплекс дыхательных упражнений для дома.",
+      "desc_en": "A simple set of breathing exercises you can do at home."
+    },
+    {
+      "type": "youtube",
+      "url": "https://www.youtube.com/@example-channel",
+      "source": "YouTube",
+      "title_pl": "Medycyna chińska i klasyczna neurologia — czy da się łączyć?",
+      "title_fr": "Médecine chinoise et neurologie classique : peut-on les combiner ?",
+      "title_ru": "Китайская медицина и классическая неврология — можно ли совмещать?",
+      "title_en": "Chinese medicine and classical neurology — can they be combined?",
+      "desc_pl": "Rozmowa o tym, gdzie kończy się medycyna komplementarna, a zaczyna standard leczenia.",
+      "desc_fr": "Une discussion sur la frontière entre médecine complémentaire et traitement standard.",
+      "desc_ru": "Разговор о границе между комплементарной медициной и стандартным лечением.",
+      "desc_en": "A discussion on where complementary medicine ends and standard treatment begins."
+    }
+  ]
+}
