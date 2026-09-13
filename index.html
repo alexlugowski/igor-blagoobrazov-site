@@ -742,6 +742,26 @@ async function loadCmsContent() {
     if (!res.ok) return;
     const data = await res.json();
 
+    if (data.bio) {
+      const b = data.bio;
+      const setIfPresent = (lang, key, val) => { if (val !== undefined && val !== '') translations[lang][key] = val; };
+      ['pl','fr','ru','en'].forEach(lang => {
+        setIfPresent(lang, 'header_subtitle', b[`header_subtitle_${lang}`]);
+        setIfPresent(lang, 'experience_line', b[`experience_line_${lang}`]);
+        setIfPresent(lang, 'about_p1', b[`about_p1_${lang}`]);
+        setIfPresent(lang, 'about_p2', b[`about_p2_${lang}`]);
+        ['m1','m2','m3','m4'].forEach(m => {
+          setIfPresent(lang, `${m}_name`, b[`${m}_name_${lang}`]);
+          setIfPresent(lang, `${m}_desc`, b[`${m}_desc_${lang}`]);
+        });
+        ['edu1','edu2','edu3'].forEach(e => {
+          setIfPresent(lang, `${e}_year`, b[`${e}_year_${lang}`]);
+          setIfPresent(lang, `${e}_text`, b[`${e}_text_${lang}`]);
+        });
+        setIfPresent(lang, 'social_text', b[`social_text_${lang}`]);
+      });
+    }
+
     if (data.avatarUrl) {
       const avatarImg = document.getElementById('avatar-img');
       if (avatarImg) avatarImg.src = data.avatarUrl;
