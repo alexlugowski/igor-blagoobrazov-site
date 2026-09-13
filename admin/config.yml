@@ -1,0 +1,57 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+locale: "pl"
+
+collections:
+  - name: "content"
+    label: "Strona — treść"
+    files:
+      - name: "content"
+        label: "Zdjęcia, galeria i blog"
+        file: "content.json"
+        fields:
+          - { label: "Zdjęcie profilowe (awatar)", name: "avatarUrl", widget: "image" }
+
+          - label: "Galeria — Kabinet (photos)"
+            name: "galleryPhotos"
+            widget: "list"
+            fields:
+              - { label: "Zdjęcie", name: "src", widget: "image" }
+              - { label: "Podpis (polski)", name: "caption_pl", widget: "string" }
+              - { label: "Podpis (francuski)", name: "caption_fr", widget: "string", required: false }
+              - { label: "Podpis (rosyjski)", name: "caption_ru", widget: "string", required: false }
+              - { label: "Podpis (angielski)", name: "caption_en", widget: "string", required: false }
+
+          - label: "Galeria — Dyplomy i certyfikaty"
+            name: "galleryDocuments"
+            widget: "list"
+            fields:
+              - { label: "Zdjęcie / skan", name: "src", widget: "image" }
+              - { label: "Podpis (polski)", name: "caption_pl", widget: "string" }
+              - { label: "Podpis (francuski)", name: "caption_fr", widget: "string", required: false }
+              - { label: "Podpis (rosyjski)", name: "caption_ru", widget: "string", required: false }
+              - { label: "Podpis (angielski)", name: "caption_en", widget: "string", required: false }
+
+          - label: "Blog / linki YouTube"
+            name: "blogPosts"
+            widget: "list"
+            fields:
+              - label: "Typ"
+                name: "type"
+                widget: "select"
+                options: ["youtube", "article"]
+              - { label: "Link (YouTube lub artykuł)", name: "url", widget: "string" }
+              - { label: "Źródło (np. YouTube, Blog)", name: "source", widget: "string" }
+              - { label: "Tytuł (polski)", name: "title_pl", widget: "string" }
+              - { label: "Tytuł (francuski)", name: "title_fr", widget: "string", required: false }
+              - { label: "Tytuł (rosyjski)", name: "title_ru", widget: "string", required: false }
+              - { label: "Tytuł (angielski)", name: "title_en", widget: "string", required: false }
+              - { label: "Opis (polski)", name: "desc_pl", widget: "text" }
+              - { label: "Opis (francuski)", name: "desc_fr", widget: "text", required: false }
+              - { label: "Opis (rosyjski)", name: "desc_ru", widget: "text", required: false }
+              - { label: "Opis (angielski)", name: "desc_en", widget: "text", required: false }
