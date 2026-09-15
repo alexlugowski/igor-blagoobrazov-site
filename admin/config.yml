@@ -110,6 +110,23 @@ collections:
 
           - { label: "Zdjęcie profilowe (awatar)", name: "avatarUrl", widget: "image" }
 
+          - label: "Opinie pacjentów (zatwierdzone ręcznie przez lekarza)"
+            name: "reviews"
+            widget: "list"
+            hint: "Nowe opinie z formularza na stronie NIE trafiają tu automatycznie — przychodzą e-mailem do zatwierdzenia. Po zatwierdzeniu wpisz je tutaj ręcznie."
+            fields:
+              - { label: "Imię / Inicjały", name: "author", widget: "string" }
+              - label: "Kraj"
+                name: "country"
+                widget: "select"
+                options: [{ label: "🇵🇱 Polska", value: "PL" }, { label: "🇫🇷 Francja", value: "FR" }, { label: "🇷🇺 Rosja", value: "RU" }, { label: "🇬🇧 Inny", value: "EN" }]
+              - label: "Ocena"
+                name: "rating"
+                widget: "select"
+                options: ["5", "4", "3"]
+              - { label: "Treść opinii", name: "text", widget: "text" }
+              - { label: "Źródło (np. 'Formularz strony', 'Google')", name: "source", widget: "string", default: "Formularz strony" }
+
           - label: "Galeria — Kabinet (photos)"
             name: "galleryPhotos"
             widget: "list"
