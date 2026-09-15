@@ -636,30 +636,33 @@
       <button type="button" class="contact-modal-close" onclick="closeContactModal()" aria-label="Zamknij">✕</button>
     </div>
     <p class="contact-modal-intro" data-i18n="contact_intro">Masz pytanie lub chcesz umówić wizytę? Wypełnij formularz, a otworzy się gotowa wiadomość e-mail do wysłania.</p>
-    <form id="contact-form" onsubmit="submitContactForm(event)">
+    <form id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="submitContactForm(event)">
+      <input type="hidden" name="form-name" value="contact">
+      <p style="position:absolute; left:-9999px;"><label>Nie wypełniaj: <input name="bot-field"></label></p>
       <div class="form-row">
         <div class="form-group">
           <label data-i18n="lbl_cname">Imię i nazwisko:</label>
-          <input type="text" id="cf-name" class="form-control" required placeholder="Jan Kowalski">
+          <input type="text" id="cf-name" name="name" class="form-control" required placeholder="Jan Kowalski" data-i18n-placeholder="ph_cname">
         </div>
         <div class="form-group">
           <label data-i18n="lbl_cphone">Telefon (opcjonalnie):</label>
-          <input type="tel" id="cf-phone" class="form-control" placeholder="+48 ...">
+          <input type="tel" id="cf-phone" name="phone" class="form-control" placeholder="+48 ..." data-i18n-placeholder="ph_cphone">
         </div>
       </div>
       <div class="form-group">
         <label data-i18n="lbl_cemail">E-mail:</label>
-        <input type="email" id="cf-email" class="form-control" required placeholder="jan@example.com">
+        <input type="email" id="cf-email" name="email" class="form-control" required placeholder="jan@example.com" data-i18n-placeholder="ph_cemail">
       </div>
       <div class="form-group">
         <label data-i18n="lbl_cmessage">Wiadomość:</label>
-        <textarea id="cf-message" class="form-control" rows="3" required placeholder="W czym mogę pomóc?"></textarea>
+        <textarea id="cf-message" name="message" class="form-control" rows="3" required placeholder="W czym mogę pomóc?" data-i18n-placeholder="ph_cmessage"></textarea>
       </div>
+      <div id="cf-status" style="font-size:0.8rem; margin-bottom:6px; display:none;"></div>
       <div style="display:flex; justify-content:flex-end;">
-        <button type="submit" class="btn btn-primary btn-sm" data-i18n="btn_csend">Wyślij wiadomość</button>
+        <button type="submit" id="cf-submit-btn" class="btn btn-primary btn-sm" data-i18n="btn_csend">Wyślij wiadomość</button>
       </div>
     </form>
-    <div class="contact-note" data-i18n="contact_note">* Formularz otwiera Twój program pocztowy z gotową wiadomością (tymczasowe rozwiązanie do czasu wdrożenia backendu wysyłającego wiadomości bezpośrednio z serwera).</div>
+    <div class="contact-note" data-i18n="contact_note">* Wiadomość trafia bezpośrednio do gabinetu poprzez formularz strony.</div>
   </div>
 </div>
 
@@ -825,9 +828,9 @@ const translations = {
     btn_whatsapp: "💬 WhatsApp", btn_open_contact: "✉ Napisz wiadomość",
     title_contact: "Formularz kontaktowy",
     contact_intro: "Masz pytanie lub chcesz umówić wizytę? Wypełnij formularz, a otworzy się gotowa wiadomość e-mail do wysłania.",
-    lbl_cname: "Imię i nazwisko:", lbl_cphone: "Telefon (opcjonalnie):", lbl_cemail: "E-mail:", lbl_cmessage: "Wiadomość:",
+    ph_cname: "Jan Kowalski", ph_cphone: "+48 ...", ph_cemail: "jan@example.com", ph_cmessage: "W czym mogę pomóc?", lbl_cname: "Imię i nazwisko:", lbl_cphone: "Telefon (opcjonalnie):", lbl_cemail: "E-mail:", lbl_cmessage: "Wiadomość:",
     btn_csend: "Wyślij wiadomość",
-    contact_note: "* Formularz otwiera Twój program pocztowy z gotową wiadomością (tymczasowe rozwiązanie do czasu wdrożenia backendu wysyłającego wiadomości bezpośrednio z serwera).",
+    contact_note: "* Wiadomość trafia bezpośrednio do gabinetu poprzez formularz strony.",
     title_blog: "Blog i materiały wideo",
     blog_intro: "Artykuły, nagrania i materiały wideo dotyczące neurologii, akupunktury i medycyny naturalnej.",
     admin_bar_label: "✎ Tryb edycji: kliknij dowolny tekst z żółtą obwódką, aby go zmienić.",
@@ -867,9 +870,9 @@ const translations = {
     btn_whatsapp: "💬 WhatsApp", btn_open_contact: "✉ Écrire un message",
     title_contact: "Formulaire de contact",
     contact_intro: "Une question ou une envie de prendre rendez-vous ? Remplissez ce formulaire, un e-mail prêt à l'envoi s'ouvrira.",
-    lbl_cname: "Nom et prénom :", lbl_cphone: "Téléphone (facultatif) :", lbl_cemail: "E-mail :", lbl_cmessage: "Message :",
+    ph_cname: "Jean Dupont", ph_cphone: "+33 ...", ph_cemail: "jean@example.com", ph_cmessage: "Comment puis-je vous aider ?", lbl_cname: "Nom et prénom :", lbl_cphone: "Téléphone (facultatif) :", lbl_cemail: "E-mail :", lbl_cmessage: "Message :",
     btn_csend: "Envoyer le message",
-    contact_note: "* Le formulaire ouvre votre messagerie avec un message prêt (solution temporaire en attendant un backend d'envoi direct).",
+    contact_note: "* Le message est envoyé directement au cabinet via le formulaire du site.",
     title_blog: "Blog et vidéos",
     blog_intro: "Articles, enregistrements et vidéos sur la neurologie, l'acupuncture et la médecine naturelle.",
     admin_bar_label: "✎ Mode édition : cliquez sur un texte encadré en jaune pour le modifier.",
@@ -909,9 +912,9 @@ const translations = {
     btn_whatsapp: "💬 WhatsApp", btn_open_contact: "✉ Написать сообщение",
     title_contact: "Форма обратной связи",
     contact_intro: "Есть вопрос или хотите записаться? Заполните форму — откроется готовое письмо для отправки.",
-    lbl_cname: "Имя и фамилия:", lbl_cphone: "Телефон (необязательно):", lbl_cemail: "E-mail:", lbl_cmessage: "Сообщение:",
+    ph_cname: "Иван Иванов", ph_cphone: "+48 ...", ph_cemail: "ivan@example.com", ph_cmessage: "Чем могу помочь?", lbl_cname: "Имя и фамилия:", lbl_cphone: "Телефон (необязательно):", lbl_cemail: "E-mail:", lbl_cmessage: "Сообщение:",
     btn_csend: "Отправить сообщение",
-    contact_note: "* Форма открывает вашу почтовую программу с готовым письмом (временное решение до подключения бэкенда, отправляющего сообщения напрямую с сервера).",
+    contact_note: "* Сообщение отправляется напрямую в кабинет через форму на сайте.",
     title_blog: "Блог и видео",
     blog_intro: "Статьи, записи и видеоматериалы о неврологии, акупунктуре и натуральной медицине.",
     admin_bar_label: "✎ Режим редактирования: кликните на текст с жёлтой рамкой, чтобы изменить его.",
@@ -951,9 +954,9 @@ const translations = {
     btn_whatsapp: "💬 WhatsApp", btn_open_contact: "✉ Send a message",
     title_contact: "Contact Form",
     contact_intro: "Have a question or want to book a visit? Fill in the form and a ready-to-send email will open.",
-    lbl_cname: "Full name:", lbl_cphone: "Phone (optional):", lbl_cemail: "E-mail:", lbl_cmessage: "Message:",
+    ph_cname: "John Smith", ph_cphone: "+48 ...", ph_cemail: "john@example.com", ph_cmessage: "How can I help?", lbl_cname: "Full name:", lbl_cphone: "Phone (optional):", lbl_cemail: "E-mail:", lbl_cmessage: "Message:",
     btn_csend: "Send message",
-    contact_note: "* The form opens your email client with a ready message (temporary solution until a backend for direct sending is added).",
+    contact_note: "* The message is sent directly to the office through the website form.",
     title_blog: "Blog & Videos",
     blog_intro: "Articles, recordings, and videos on neurology, acupuncture, and natural medicine.",
     admin_bar_label: "✎ Edit mode: click any text with a yellow outline to change it.",
@@ -1003,6 +1006,13 @@ function setLanguage(lang) {
     if (translations[lang][key]) {
       el.setAttribute('title', translations[lang][key]);
       el.setAttribute('aria-label', translations[lang][key]);
+    }
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (translations[lang][key]) {
+      el.setAttribute('placeholder', translations[lang][key]);
     }
   });
   
@@ -1204,18 +1214,40 @@ document.addEventListener('keydown', (e) => {
    POST to the new /api/contact endpoint and keep the same field IDs. */
 function submitContactForm(e) {
   e.preventDefault();
-  const name = document.getElementById('cf-name').value;
-  const phone = document.getElementById('cf-phone').value;
-  const email = document.getElementById('cf-email').value;
-  const message = document.getElementById('cf-message').value;
+  const form = document.getElementById('contact-form');
+  const btn = document.getElementById('cf-submit-btn');
+  const status = document.getElementById('cf-status');
 
-  const subject = `Kontakt ze strony — ${name}`;
-  const body = `Imię i nazwisko: ${name}\nTelefon: ${phone || '-'}\nE-mail: ${email}\n\nWiadomość:\n${message}`;
-  const mailto = `mailto:puszkin5@poczta.onet.eu?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const encode = (data) => Object.keys(data).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k])).join('&');
+  const formData = {
+    'form-name': 'contact',
+    name: document.getElementById('cf-name').value,
+    phone: document.getElementById('cf-phone').value,
+    email: document.getElementById('cf-email').value,
+    message: document.getElementById('cf-message').value,
+  };
 
-  window.location.href = mailto;
-  document.getElementById('contact-form').reset();
-  closeContactModal();
+  btn.disabled = true;
+  status.style.display = 'none';
+
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: encode(formData),
+  })
+    .then(() => {
+      status.textContent = 'Dziękujemy! Wiadomość została wysłana.';
+      status.style.color = 'green';
+      status.style.display = 'block';
+      form.reset();
+      setTimeout(closeContactModal, 1800);
+    })
+    .catch(() => {
+      status.textContent = 'Nie udało się wysłać. Spróbuj ponownie lub zadzwoń bezpośrednio.';
+      status.style.color = 'crimson';
+      status.style.display = 'block';
+    })
+    .finally(() => { btn.disabled = false; });
 }
 
 /* ===== ADMIN MODE (client-side only, no backend yet) =====
