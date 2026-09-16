@@ -15,6 +15,14 @@ collections:
         label: "Zdjęcia, galeria i blog"
         file: "content.json"
         fields:
+          - label: "Kontakt — telefon i WhatsApp"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Telefon (do wyświetlenia, np. +48 22 455 51 15)", name: "phone_display", widget: "string" }
+              - { label: "Telefon (same cyfry z numerem kraju, np. 48224555115)", name: "phone_digits", widget: "string", pattern: ['^[0-9]+$', "Tylko cyfry, bez spacji, +, myślników"] }
+              - { label: "WhatsApp (same cyfry z numerem kraju, np. 48501234567)", name: "whatsapp_digits", widget: "string", pattern: ['^[0-9]+$', "Tylko cyfry, bez spacji, +, myślników"], hint: "Może być inny numer niż telefon stacjonarny — np. prywatna komórka lekarza." }
+
           - label: "Шапка сайта"
             name: "bio"
             widget: "object"
