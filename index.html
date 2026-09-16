@@ -337,7 +337,7 @@
   .blog-post-source { font-size: 0.72rem; color: var(--accent); font-weight: 700; text-transform: uppercase; }
 
   /* Contact Form */
-  .contact-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; }
+  .contact-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; padding-bottom: 56px; }
 
   /* Admin Mode */
   .admin-toggle {
@@ -375,16 +375,6 @@
 
 <div class="container">
 
-  <!-- ADMIN BAR (visible only in edit mode) -->
-  <div class="admin-bar" id="admin-bar">
-    <span data-i18n="admin_bar_label">✎ Tryb edycji: kliknij dowolny tekst z żółtą obwódką, aby go zmienić.</span>
-    <div style="display:flex; gap:6px; flex-wrap:wrap;">
-      <button class="btn btn-primary btn-sm" onclick="exportSiteAsHTML()" data-i18n="admin_export_html">💾 Zapisz jako nowy plik HTML</button>
-      <button class="btn btn-outline btn-sm" style="background:#fff;" onclick="exportSiteData()" data-i18n="admin_export">Eksportuj dane (JSON)</button>
-      <button class="btn btn-outline btn-sm" style="background:#fff;" onclick="exitAdminMode()" data-i18n="admin_exit">Zakończ edycję</button>
-    </div>
-  </div>
-
   <!-- STICKY TOP BAR: page nav (left) + compact language dropdown (right) -->
   <div class="sticky-topbar" id="sticky-topbar">
     <div class="page-nav">
@@ -415,8 +405,6 @@
         <!-- TODO: replace with a local, shoulders-up portrait, e.g. images/igor-blagoobrazov.webp,
              instead of an external placeholder service (via.placeholder.com can go down / be blocked). -->
         <img id="avatar-img" src="https://via.placeholder.com/240x310/1b3b2b/ffffff?text=Dr+Igor" alt="lek. med. Igor Blagoobrazov" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<span style=\'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.75rem;text-align:center;padding:4px;\'>Dr. Igor</span>')">
-        <div class="photo-edit-overlay" onclick="triggerPhotoUpload('avatar-file-input')" data-i18n="admin_change_photo">📷 Zmień zdjęcie</div>
-        <input type="file" id="avatar-file-input" accept="image/*" style="display:none" onchange="handlePhotoChange(event, 'avatar-img')">
       </div>
       <div class="header-name-block">
         <h1>lek. med. Igor Blagoobrazov</h1>
@@ -546,15 +534,17 @@
         </div>
 
         <!-- Add Review Form -->
-        <form class="review-form" id="review-form" onsubmit="submitReview(event)">
+        <form class="review-form" id="review-form" name="review" method="POST" data-netlify="true" netlify-honeypot="rev-bot-field" onsubmit="submitReview(event)">
+          <input type="hidden" name="form-name" value="review">
+          <p style="position:absolute; left:-9999px;"><label>Nie wypełniaj: <input name="rev-bot-field"></label></p>
           <div class="form-group">
             <label data-i18n="lbl_name">Twoje imię / Inicjały:</label>
-            <input type="text" id="rev-name" class="form-control" required placeholder="np. Marek K.">
+            <input type="text" id="rev-name" name="name" class="form-control" required placeholder="np. Marek K." data-i18n-placeholder="ph_revname">
           </div>
           <div class="form-row">
             <div class="form-group">
               <label data-i18n="lbl_country">Kraj / Flaga:</label>
-              <select id="rev-country" class="form-control" required>
+              <select id="rev-country" name="country" class="form-control" required>
                 <option value="PL">🇵🇱 Polska (PL)</option>
                 <option value="FR">🇫🇷 Francja (FR)</option>
                 <option value="RU">🇷🇺 Polska/RU (RU)</option>
@@ -563,7 +553,7 @@
             </div>
             <div class="form-group">
               <label data-i18n="lbl_rating">Ocena:</label>
-              <select id="rev-rating" class="form-control">
+              <select id="rev-rating" name="rating" class="form-control">
                 <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
                 <option value="4">⭐⭐⭐⭐ (4/5)</option>
               </select>
@@ -571,11 +561,12 @@
           </div>
           <div class="form-group">
             <label data-i18n="lbl_text">Treść opinii:</label>
-            <textarea id="rev-text" class="form-control" rows="3" required placeholder="Opisz swoje wrażenia z wizyty..."></textarea>
+            <textarea id="rev-text" name="text" class="form-control" rows="3" required placeholder="Opisz swoje wrażenia z wizyty..." data-i18n-placeholder="ph_revtext"></textarea>
           </div>
+          <div id="rev-status" style="font-size:0.8rem; margin-bottom:6px; display:none;"></div>
           <div style="display:flex; justify-content:flex-end; gap:6px;">
             <button type="button" class="btn btn-outline btn-sm" onclick="toggleReviewForm()" data-i18n="btn_cancel">Anuluj</button>
-            <button type="submit" class="btn btn-primary btn-sm" data-i18n="btn_send">Wyślij opinię</button>
+            <button type="submit" id="rev-submit-btn" class="btn btn-primary btn-sm" data-i18n="btn_send">Wyślij opinię</button>
           </div>
         </form>
 
@@ -599,12 +590,11 @@
   <!-- FOOTER -->
   <div class="footer">
     <span data-i18n="footer_text">© Centrum Medycyny Naturalnej AMAMED • NIP: 6321374836 • Rejestracja i wizyty po wcześniejszym kontakcie telefonicznym</span>
-    <button class="admin-toggle" onclick="promptAdminMode()" title="Panel administratora" id="admin-entry-btn">⚙</button>
   </div>
 
 </div>
 
-<!-- GALLERY LIGHTBOX (click any thumbnail to browse all photos; doubles as the admin photo manager) -->
+<!-- GALLERY LIGHTBOX (click any thumbnail to browse all photos) -->
 <div class="lightbox-overlay" id="gallery-lightbox" onclick="closeLightbox(event)">
   <div class="lightbox-content" onclick="event.stopPropagation()">
     <button type="button" class="lightbox-close" onclick="closeLightbox()" aria-label="Zamknij">✕</button>
@@ -613,17 +603,6 @@
     <button type="button" class="lightbox-nav-btn lightbox-next" onclick="lightboxNext(event)" aria-label="Następne">›</button>
     <div class="lightbox-caption" id="lightbox-caption"></div>
     <div class="lightbox-counter" id="lightbox-counter"></div>
-
-    <!-- Admin-only photo management (visible only while admin-mode is active) -->
-    <div class="lightbox-admin-toolbar">
-      <button type="button" onclick="lightboxReplacePhoto()" data-i18n="lightbox_replace">📷 Zmień to zdjęcie</button>
-      <button type="button" onclick="lightboxAddPhoto()" data-i18n="lightbox_add">+ Dodaj zdjęcie</button>
-      <button type="button" onclick="lightboxMove(-1)" data-i18n="lightbox_move_left">← Przesuń</button>
-      <button type="button" onclick="lightboxMove(1)" data-i18n="lightbox_move_right">Przesuń →</button>
-      <button type="button" class="danger" onclick="lightboxDeletePhoto()" data-i18n="lightbox_delete">🗑 Usuń</button>
-    </div>
-    <input type="file" id="lightbox-replace-input" accept="image/*" style="display:none" onchange="handleLightboxReplace(event)">
-    <input type="file" id="lightbox-add-input" accept="image/*" style="display:none" onchange="handleLightboxAdd(event)">
   </div>
 </div>
 
@@ -765,6 +744,16 @@ async function loadCmsContent() {
       });
     }
 
+    if (Array.isArray(data.reviews) && data.reviews.length) {
+      const flagMap = { PL: '🇵🇱', FR: '🇫🇷', RU: '🇷🇺', EN: '🇬🇧' };
+      const cmsReviews = data.reviews.map((r, i) => ({
+        id: `cms-${i}`, author: r.author || '', source: r.source || 'Formularz strony',
+        country: r.country || 'PL', flag: flagMap[r.country] || '🌐',
+        rating: parseInt(r.rating, 10) || 5, text: r.text || ''
+      }));
+      initialReviews = cmsReviews.concat(initialReviews);
+    }
+
     if (data.avatarUrl) {
       const avatarImg = document.getElementById('avatar-img');
       if (avatarImg) avatarImg.src = data.avatarUrl;
@@ -821,7 +810,7 @@ const translations = {
     title_social: "Działalność Społeczna",
     social_text: "Wsparcie i zaangażowanie w pomoc medyczną osobom potrzebującym. W 2002 roku dr Blagoobrazov otrzymał podziękowanie Zarządu Okręgu Warszawskiego Związku Inwalidów Wojennych RP za działalność na rzecz społeczności inwalidów wojennych.",
     title_reviews: "Opinie Pacjentów", filter_all: "Wszystkie", btn_add_review: "Podziel się opinią",
-    lbl_name: "Twoje imię / Inicjały:", lbl_country: "Kraj / Flaga:", lbl_rating: "Ocena:", lbl_text: "Treść opinii:",
+    ph_revname: "np. Marek K.", ph_revtext: "Opisz swoje wrażenia z wizyty...", lbl_name: "Twoje imię / Inicjały:", lbl_country: "Kraj / Flaga:", lbl_rating: "Ocena:", lbl_text: "Treść opinii:",
     btn_cancel: "Anuluj", btn_send: "Wyślij opinię",
     footer_text: "© Centrum Medycyny Naturalnej AMAMED • NIP: 6321374836 • Rejestracja i wizyty po wcześniejszym kontakcie telefonicznym",
     tab_home: "Strona główna", tab_blog: "Blog",
@@ -830,11 +819,9 @@ const translations = {
     contact_intro: "Masz pytanie lub chcesz umówić wizytę? Wypełnij formularz, a otworzy się gotowa wiadomość e-mail do wysłania.",
     ph_cname: "Jan Kowalski", ph_cphone: "+48 ...", ph_cemail: "jan@example.com", ph_cmessage: "W czym mogę pomóc?", lbl_cname: "Imię i nazwisko:", lbl_cphone: "Telefon (opcjonalnie):", lbl_cemail: "E-mail:", lbl_cmessage: "Wiadomość:",
     btn_csend: "Wyślij wiadomość",
-    contact_note: "* Wiadomość trafia bezpośrednio do gabinetu poprzez formularz strony.",
+    contact_note: "* Wiadomość trafia bezpośrednio do gabinetu poprzez formularz strony.", review_thanks: "Dziękujemy! Opinia zostanie opublikowana po weryfikacji.", review_error: "Nie udało się wysłać opinii. Spróbuj ponownie.",
     title_blog: "Blog i materiały wideo",
     blog_intro: "Artykuły, nagrania i materiały wideo dotyczące neurologii, akupunktury i medycyny naturalnej.",
-    admin_bar_label: "✎ Tryb edycji: kliknij dowolny tekst z żółtą obwódką, aby go zmienić.",
-    admin_export_html: "💾 Zapisz jako nowy plik HTML", admin_export: "Eksportuj dane (JSON)", admin_exit: "Zakończ edycję", admin_change_photo: "📷 Zmień zdjęcie"
   },
   fr: {
     header_subtitle: "Médecin neurologue et épidémiologiste • Acupuncture",
@@ -863,7 +850,7 @@ const translations = {
     title_social: "Engagement Social",
     social_text: "Soutien et engagement médical auprès des personnes dans le besoin. En 2002, le Dr Blagoobrazov a reçu les remerciements de l'Association des Invalides de Guerre de Pologne.",
     title_reviews: "Avis des Patients", filter_all: "Tous", btn_add_review: "Laissez un avis",
-    lbl_name: "Votre nom / Initiales :", lbl_country: "Pays / Drapeau :", lbl_rating: "Note :", lbl_text: "Votre avis :",
+    ph_revname: "ex. Marc D.", ph_revtext: "Décrivez votre expérience...", lbl_name: "Votre nom / Initiales :", lbl_country: "Pays / Drapeau :", lbl_rating: "Note :", lbl_text: "Votre avis :",
     btn_cancel: "Annuler", btn_send: "Envoyer l'avis",
     footer_text: "© Centre de Médecine Naturelle AMAMED • NIP : 6321374836 • Consultations sur rendez-vous téléphonique",
     tab_home: "Accueil", tab_blog: "Blog",
@@ -872,11 +859,9 @@ const translations = {
     contact_intro: "Une question ou une envie de prendre rendez-vous ? Remplissez ce formulaire, un e-mail prêt à l'envoi s'ouvrira.",
     ph_cname: "Jean Dupont", ph_cphone: "+33 ...", ph_cemail: "jean@example.com", ph_cmessage: "Comment puis-je vous aider ?", lbl_cname: "Nom et prénom :", lbl_cphone: "Téléphone (facultatif) :", lbl_cemail: "E-mail :", lbl_cmessage: "Message :",
     btn_csend: "Envoyer le message",
-    contact_note: "* Le message est envoyé directement au cabinet via le formulaire du site.",
+    contact_note: "* Le message est envoyé directement au cabinet via le formulaire du site.", review_thanks: "Merci ! Votre avis sera publié après vérification.", review_error: "Échec de l'envoi. Veuillez réessayer.",
     title_blog: "Blog et vidéos",
     blog_intro: "Articles, enregistrements et vidéos sur la neurologie, l'acupuncture et la médecine naturelle.",
-    admin_bar_label: "✎ Mode édition : cliquez sur un texte encadré en jaune pour le modifier.",
-    admin_export_html: "💾 Enregistrer comme nouveau fichier HTML", admin_export: "Exporter les données (JSON)", admin_exit: "Quitter l'édition", admin_change_photo: "📷 Changer la photo"
   },
   ru: {
     header_subtitle: "Врач-невролог и эпидемиолог • Акупунктура",
@@ -905,7 +890,7 @@ const translations = {
     title_social: "Общественная деятельность",
     social_text: "В 2002 году доктор Благообразов получил благодарность от Союза инвалидов войны Польши (ZIW RP).",
     title_reviews: "Отзывы пациентов", filter_all: "Все", btn_add_review: "Поделиться мнением",
-    lbl_name: "Ваше имя / Инициалы:", lbl_country: "Страна / Флаг:", lbl_rating: "Оценка:", lbl_text: "Текст отзыва:",
+    ph_revname: "напр. Марк К.", ph_revtext: "Опишите ваши впечатления от визита...", lbl_name: "Ваше имя / Инициалы:", lbl_country: "Страна / Флаг:", lbl_rating: "Оценка:", lbl_text: "Текст отзыва:",
     btn_cancel: "Отмена", btn_send: "Отправить отзыв",
     footer_text: "© Центр натуральной медицины AMAMED • NIP: 6321374836 • Прием по предварительной записи",
     tab_home: "Главная", tab_blog: "Блог",
@@ -914,11 +899,9 @@ const translations = {
     contact_intro: "Есть вопрос или хотите записаться? Заполните форму — откроется готовое письмо для отправки.",
     ph_cname: "Иван Иванов", ph_cphone: "+48 ...", ph_cemail: "ivan@example.com", ph_cmessage: "Чем могу помочь?", lbl_cname: "Имя и фамилия:", lbl_cphone: "Телефон (необязательно):", lbl_cemail: "E-mail:", lbl_cmessage: "Сообщение:",
     btn_csend: "Отправить сообщение",
-    contact_note: "* Сообщение отправляется напрямую в кабинет через форму на сайте.",
+    contact_note: "* Сообщение отправляется напрямую в кабинет через форму на сайте.", review_thanks: "Спасибо! Отзыв будет опубликован после проверки.", review_error: "Не удалось отправить отзыв. Попробуйте ещё раз.",
     title_blog: "Блог и видео",
     blog_intro: "Статьи, записи и видеоматериалы о неврологии, акупунктуре и натуральной медицине.",
-    admin_bar_label: "✎ Режим редактирования: кликните на текст с жёлтой рамкой, чтобы изменить его.",
-    admin_export_html: "💾 Сохранить как новый HTML-файл", admin_export: "Экспортировать данные (JSON)", admin_exit: "Завершить редактирование", admin_change_photo: "📷 Изменить фото"
   },
   en: {
     header_subtitle: "Neurologist & Epidemiologist • Acupuncture",
@@ -947,7 +930,7 @@ const translations = {
     title_social: "Community Involvement",
     social_text: "In 2002, Dr. Blagoobrazov received formal recognition from the Polish War Invalids Association.",
     title_reviews: "Patient Reviews", filter_all: "All", btn_add_review: "Share your feedback",
-    lbl_name: "Your Name / Initials:", lbl_country: "Country / Flag:", lbl_rating: "Rating:", lbl_text: "Review text:",
+    ph_revname: "e.g. John D.", ph_revtext: "Describe your experience...", lbl_name: "Your Name / Initials:", lbl_country: "Country / Flag:", lbl_rating: "Rating:", lbl_text: "Review text:",
     btn_cancel: "Cancel", btn_send: "Submit Review",
     footer_text: "© AMAMED Center for Natural Medicine • NIP: 6321374836 • Appointments available upon phone reservation",
     tab_home: "Home", tab_blog: "Blog",
@@ -956,11 +939,9 @@ const translations = {
     contact_intro: "Have a question or want to book a visit? Fill in the form and a ready-to-send email will open.",
     ph_cname: "John Smith", ph_cphone: "+48 ...", ph_cemail: "john@example.com", ph_cmessage: "How can I help?", lbl_cname: "Full name:", lbl_cphone: "Phone (optional):", lbl_cemail: "E-mail:", lbl_cmessage: "Message:",
     btn_csend: "Send message",
-    contact_note: "* The message is sent directly to the office through the website form.",
+    contact_note: "* The message is sent directly to the office through the website form.", review_thanks: "Thank you! Your review will be published after verification.", review_error: "Could not send the review. Please try again.",
     title_blog: "Blog & Videos",
     blog_intro: "Articles, recordings, and videos on neurology, acupuncture, and natural medicine.",
-    admin_bar_label: "✎ Edit mode: click any text with a yellow outline to change it.",
-    admin_export_html: "💾 Save as new HTML file", admin_export: "Export data (JSON)", admin_exit: "Exit editing", admin_change_photo: "📷 Change photo"
   }
 };
 
@@ -1146,56 +1127,6 @@ function closeLightbox(event) {
 }
 
 /* ---- Admin-only photo management (buttons only visible in admin-mode) ---- */
-function lightboxReplacePhoto() {
-  document.getElementById('lightbox-replace-input').click();
-}
-function handleLightboxReplace(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    currentGallery()[lightboxIndex].src = e.target.result;
-    updateLightbox();
-  };
-  reader.readAsDataURL(file);
-  event.target.value = '';
-}
-
-function lightboxAddPhoto() {
-  document.getElementById('lightbox-add-input').click();
-}
-function handleLightboxAdd(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const items = currentGallery();
-    items.push({ src: e.target.result, caption: { pl: '', fr: '', ru: '', en: '' } });
-    lightboxIndex = items.length - 1;
-    updateLightbox();
-  };
-  reader.readAsDataURL(file);
-  event.target.value = '';
-}
-
-function lightboxMove(direction) {
-  const items = currentGallery();
-  const newIndex = lightboxIndex + direction;
-  if (newIndex < 0 || newIndex >= items.length) return;
-  [items[lightboxIndex], items[newIndex]] = [items[newIndex], items[lightboxIndex]];
-  lightboxIndex = newIndex;
-  updateLightbox();
-}
-
-function lightboxDeletePhoto() {
-  const items = currentGallery();
-  if (items.length <= 1) { alert('Galeria musi zawierać przynajmniej jedno zdjęcie.'); return; }
-  if (!confirm('Usunąć to zdjęcie z galerii?')) return;
-  items.splice(lightboxIndex, 1);
-  if (lightboxIndex >= items.length) lightboxIndex = items.length - 1;
-  updateLightbox();
-}
-
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') document.getElementById('lang-dropdown-menu')?.classList.remove('open');
   if (!document.getElementById('gallery-lightbox').classList.contains('open')) {
@@ -1248,122 +1179,6 @@ function submitContactForm(e) {
       status.style.display = 'block';
     })
     .finally(() => { btn.disabled = false; });
-}
-
-/* ===== ADMIN MODE (client-side only, no backend yet) =====
-   Marks every translatable field as contenteditable so the doctor/admin
-   can tweak copy directly in the browser. Nothing is persisted to a
-   server: use "Eksportuj zmiany" to download the edited content as JSON
-   and hand it to the developer once the backend/CMS is ready. */
-const ADMIN_PIN = '2001'; // TEMPORARY — replace with real auth once backend exists
-
-function promptAdminMode() {
-  if (document.body.classList.contains('admin-mode')) return;
-  const pin = window.prompt('Podaj kod administratora:');
-  if (pin === ADMIN_PIN) {
-    enterAdminMode();
-  } else if (pin !== null) {
-    alert('Nieprawidłowy kod.');
-  }
-}
-
-function enterAdminMode() {
-  document.body.classList.add('admin-mode');
-  document.querySelectorAll('[data-i18n], .method-name, .method-desc, .timeline-year, .timeline-text, .blog-post-title, .blog-post-desc, h1, .contact-item').forEach(el => {
-    if (el.classList.contains('photo-edit-overlay')) return; // don't make the upload button's own label editable
-    el.setAttribute('data-editable', 'true');
-    el.setAttribute('contenteditable', 'true');
-    el.addEventListener('input', () => el.setAttribute('data-edited', 'true'));
-  });
-}
-
-/* ===== PHOTO UPLOAD (Admin Mode) =====
-   No backend yet: reads the chosen file locally and swaps the <img> src to a
-   data URL, so the new photo previews immediately in the browser. Nothing is
-   uploaded to a server. Once a backend/CMS exists, replace the FileReader
-   step with an actual upload (fetch POST/multipart) and store the returned
-   image URL instead. */
-function triggerPhotoUpload(inputId) {
-  if (!document.body.classList.contains('admin-mode')) return;
-  document.getElementById(inputId).click();
-}
-
-function handlePhotoChange(event, imgId) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const img = document.getElementById(imgId);
-    img.src = e.target.result;
-    img.style.display = '';
-    img.dataset.edited = 'true';
-    // remove any fallback text span inserted by a previous onerror
-    const fallback = img.nextElementSibling;
-    if (fallback && fallback.tagName === 'SPAN') fallback.remove();
-  };
-  reader.readAsDataURL(file);
-}
-
-function exitAdminMode() {
-  document.body.classList.remove('admin-mode');
-  document.querySelectorAll('[data-editable]').forEach(el => {
-    el.removeAttribute('contenteditable');
-    el.removeAttribute('data-editable');
-  });
-}
-
-/* ===== SAVE AS NEW HTML FILE (temporary "memory" until a real backend exists) =====
-   Serializes the current page — including any text edits and any uploaded
-   photos (which live in the DOM as data URLs) — into a brand-new, fully
-   standalone .html file and triggers a download. Open the downloaded file
-   to keep working on it, or hand it to the developer once a backend is
-   ready. Admin-only state (edit outlines, admin-mode flag) is stripped out
-   first so the saved file opens as a normal, clean site. */
-function exportSiteAsHTML() {
-  const clone = document.documentElement.cloneNode(true);
-
-  clone.querySelector('body').classList.remove('admin-mode');
-  clone.querySelectorAll('[data-editable]').forEach(el => {
-    el.removeAttribute('contenteditable');
-    el.removeAttribute('data-editable');
-    el.removeAttribute('data-edited');
-  });
-  clone.querySelectorAll('img[data-edited]').forEach(img => img.removeAttribute('data-edited'));
-
-  const html = '<!DOCTYPE html>\n' + clone.outerHTML;
-  const blob = new Blob([html], { type: 'text/html' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `amamed-site-${Date.now()}.html`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function exportSiteData() {
-  const data = {};
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    data[el.getAttribute('data-i18n') + '__' + currentLang] = el.textContent.trim();
-  });
-  data['header_name'] = document.querySelector('.header-card h1').textContent.trim();
-
-  const images = {};
-  document.querySelectorAll('img[data-edited="true"]').forEach(img => {
-    images[img.id] = img.src; // data URL — backend should re-upload this and store a real file/URL
-  });
-  if (Object.keys(images).length) data['images_changed'] = images;
-
-  data['_note'] = 'Wygenerowano ręcznie z trybu edycji front-end. Przekaż ten plik programiście do wgrania w przyszłym panelu/CMS. Pole "images_changed" zawiera nowe zdjęcia jako data URL — do zamiany na prawdziwe pliki po stronie serwera.';
-  data['_lang'] = currentLang;
-  data['_exportedAt'] = new Date().toISOString();
-
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `amamed-site-content-${currentLang}-${Date.now()}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
 }
 
 /* Escapes user-controlled text before it is ever placed into innerHTML,
@@ -1428,20 +1243,34 @@ function submitReview(e) {
 
   if (!name || !text) return; // basic required-field guard
 
-  const flagMap = { PL: '🇵🇱', FR: '🇫🇷', RU: '🇷🇺', EN: '🇬🇧' };
+  const btn = document.getElementById('rev-submit-btn');
+  const status = document.getElementById('rev-status');
+  const encode = (data) => Object.keys(data).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k])).join('&');
 
-  const newRev = {
-    id: Date.now(), author: name, source: "Nowa opinia",
-    country: country, flag: flagMap[country] || '🌐', rating: rating, text: text
-  };
+  btn.disabled = true;
+  status.style.display = 'none';
 
-  initialReviews.unshift(newRev);
-  document.getElementById('review-form').reset();
-  toggleReviewForm();
-
-  activeCountryFilter = 'all';
-  document.querySelectorAll('.filter-chip').forEach((btn, idx) => btn.classList.toggle('active', idx === 0));
-  renderReviews();
+  // Reviews are NOT published instantly: they go to Netlify Forms for the
+  // doctor to read and moderate, then he adds approved ones via the CMS.
+  // This avoids publishing unverified/abusive text automatically.
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: encode({ 'form-name': 'review', name, country, rating, text }),
+  })
+    .then(() => {
+      status.textContent = translations[currentLang].review_thanks || 'Dziękujemy! Opinia zostanie opublikowana po weryfikacji.';
+      status.style.color = 'green';
+      status.style.display = 'block';
+      document.getElementById('review-form').reset();
+      setTimeout(toggleReviewForm, 1800);
+    })
+    .catch(() => {
+      status.textContent = translations[currentLang].review_error || 'Nie udało się wysłać opinii. Spróbuj ponownie.';
+      status.style.color = 'crimson';
+      status.style.display = 'block';
+    })
+    .finally(() => { btn.disabled = false; });
 }
 
 /* ===== Touch swipe support for the lightbox (mobile: swipe left/right to browse) ===== */
