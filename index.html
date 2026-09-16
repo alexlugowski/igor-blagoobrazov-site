@@ -412,7 +412,7 @@
         <div class="experience-line" data-i18n="experience_line">Ponad 25 lat doświadczenia.</div>
 
         <div class="header-actions">
-          <a href="https://wa.me/48224555115?text=Dzie%C5%84%20dobry%2C%20chcia%C5%82(a)bym%20um%C3%B3wi%C4%87%20wizyt%C4%99" target="_blank" rel="noopener" class="btn btn-whatsapp" data-i18n="btn_whatsapp">💬 WhatsApp</a>
+          <a href="https://wa.me/48224555115?text=Dzie%C5%84%20dobry%2C%20chcia%C5%82(a)bym%20um%C3%B3wi%C4%87%20wizyt%C4%99" target="_blank" rel="noopener" class="btn btn-whatsapp" id="whatsapp-link" data-i18n="btn_whatsapp">💬 WhatsApp</a>
           <button type="button" class="btn btn-phone-cta" onclick="openContactModal()" data-i18n="btn_open_contact">✉ Napisz wiadomość</button>
         </div>
       </div>
@@ -431,7 +431,7 @@
         </svg>
       </a>
     </div>
-    <a href="tel:+48224555115" class="location-phone">📞 +48 22 455 51 15</a>
+    <a href="tel:+48224555115" class="location-phone" id="phone-link">📞 +48 22 455 51 15</a>
 
   </div>
 
@@ -723,6 +723,25 @@ async function loadCmsContent() {
     const res = await fetch('content.json', { cache: 'no-store' });
     if (!res.ok) return;
     const data = await res.json();
+
+    if (data.contact) {
+      const c = data.contact;
+      if (c.phone_display && c.phone_digits) {
+        const phoneEl = document.getElementById('phone-link');
+        if (phoneEl) {
+          phoneEl.href = 'tel:+' + c.phone_digits;
+          phoneEl.textContent = '📞 ' + c.phone_display;
+        }
+      }
+      if (c.whatsapp_digits) {
+        const waEl = document.getElementById('whatsapp-link');
+        if (waEl) {
+          const existingUrl = new URL(waEl.href);
+          const text = existingUrl.searchParams.get('text') || '';
+          waEl.href = `https://wa.me/${c.whatsapp_digits}?text=${encodeURIComponent(text)}`;
+        }
+      }
+    }
 
     if (data.bio) {
       const b = data.bio;
