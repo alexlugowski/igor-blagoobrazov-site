@@ -10,166 +10,191 @@ locale: "pl"
 collections:
   - name: "content"
     label: "Strona — treść"
+    editor:
+      preview: false
     files:
       - name: "content"
-        label: "Zdjęcia, galeria i blog"
+        label: "Весь сайт (Zdjęcia, galeria i blog)"
         file: "content.json"
+        description: "Нажмите на нужный раздел, измените и нажмите «Opublikuj» (вверху справа) ОДИН раз в конце. Каждая публикация расходует часть месячного лимита."
         fields:
-          - label: "Kontakt — telefon i WhatsApp"
+          - label: "1. 📞 Телефон и WhatsApp"
             name: "contact"
             widget: "object"
+            summary: "{{fields.phone_display}}"
             fields:
-              - { label: "Telefon (do wyświetlenia, np. +48 22 455 51 15)", name: "phone_display", widget: "string" }
-              - { label: "Telefon (same cyfry z numerem kraju, np. 48224555115)", name: "phone_digits", widget: "string", pattern: ['^[0-9]+$', "Tylko cyfry, bez spacji, +, myślników"] }
-              - { label: "WhatsApp (same cyfry z numerem kraju, np. 48501234567)", name: "whatsapp_digits", widget: "string", pattern: ['^[0-9]+$', "Tylko cyfry, bez spacji, +, myślników"], hint: "Może być inny numer niż telefon stacjonarny — np. prywatna komórka lekarza." }
+              - { label: "Телефон — как показать на сайте", name: "phone_display", widget: "string", hint: "Например: +48 22 455 51 15" }
+              - { label: "Телефон — только цифры", name: "phone_digits", widget: "string", pattern: ['^[0-9]+$', "Только цифры, без пробелов, плюса и дефисов"], hint: "С кодом страны: 48224555115" }
+              - { label: "WhatsApp — только цифры", name: "whatsapp_digits", widget: "string", pattern: ['^[0-9]+$', "Только цифры, без пробелов, плюса и дефисов"], hint: "С кодом страны: 48501234567. Может отличаться от телефона кабинета (личный мобильный). На этом номере должен быть установлен WhatsApp Business." }
 
-          - label: "Шапка сайта"
+          - label: "2. 📝 Тексты сайта (о враче, методы, образование)"
             name: "bio"
             widget: "object"
             collapsed: true
             fields:
-              - { label: "Podtytuł (PL)", name: "header_subtitle_pl", widget: "string" }
-              - { label: "Sous-titre (FR)", name: "header_subtitle_fr", widget: "string", required: false }
-              - { label: "Подзаголовок (RU)", name: "header_subtitle_ru", widget: "string", required: false }
-              - { label: "Subtitle (EN)", name: "header_subtitle_en", widget: "string", required: false }
+              - { label: "Подзаголовок под именем — 🇵🇱 PL (основной)", name: "header_subtitle_pl", widget: "string", hint: "Короткая строка под именем врача вверху сайта." }
+              - { label: "Подзаголовок под именем — 🇫🇷 FR", name: "header_subtitle_fr", widget: "string", required: false }
+              - { label: "Подзаголовок под именем — 🇷🇺 RU", name: "header_subtitle_ru", widget: "string", required: false }
+              - { label: "Подзаголовок под именем — 🇬🇧 EN", name: "header_subtitle_en", widget: "string", required: false }
 
-              - { label: "Doświadczenie (PL)", name: "experience_line_pl", widget: "string" }
-              - { label: "Expérience (FR)", name: "experience_line_fr", widget: "string", required: false }
-              - { label: "Опыт (RU)", name: "experience_line_ru", widget: "string", required: false }
-              - { label: "Experience (EN)", name: "experience_line_en", widget: "string", required: false }
+              - { label: "Строка об опыте — 🇵🇱 PL (основной)", name: "experience_line_pl", widget: "string" }
+              - { label: "Строка об опыте — 🇫🇷 FR", name: "experience_line_fr", widget: "string", required: false }
+              - { label: "Строка об опыте — 🇷🇺 RU", name: "experience_line_ru", widget: "string", required: false }
+              - { label: "Строка об опыте — 🇬🇧 EN", name: "experience_line_en", widget: "string", required: false }
 
-              - { label: "O mnie — akapit 1 (PL)", name: "about_p1_pl", widget: "text" }
-              - { label: "À propos — para 1 (FR)", name: "about_p1_fr", widget: "text", required: false }
-              - { label: "О себе — абзац 1 (RU)", name: "about_p1_ru", widget: "text", required: false }
-              - { label: "About — paragraph 1 (EN)", name: "about_p1_en", widget: "text", required: false }
+              - { label: "О враче, абзац 1 — 🇵🇱 PL (основной)", name: "about_p1_pl", widget: "text", hint: "Раздел «O mnie» на сайте." }
+              - { label: "О враче, абзац 1 — 🇫🇷 FR", name: "about_p1_fr", widget: "text", required: false }
+              - { label: "О враче, абзац 1 — 🇷🇺 RU", name: "about_p1_ru", widget: "text", required: false }
+              - { label: "О враче, абзац 1 — 🇬🇧 EN", name: "about_p1_en", widget: "text", required: false }
 
-              - { label: "O mnie — akapit 2 (PL)", name: "about_p2_pl", widget: "text" }
-              - { label: "À propos — para 2 (FR)", name: "about_p2_fr", widget: "text", required: false }
-              - { label: "О себе — абзац 2 (RU)", name: "about_p2_ru", widget: "text", required: false }
-              - { label: "About — paragraph 2 (EN)", name: "about_p2_en", widget: "text", required: false }
+              - { label: "О враче, абзац 2 — 🇵🇱 PL (основной)", name: "about_p2_pl", widget: "text" }
+              - { label: "О враче, абзац 2 — 🇫🇷 FR", name: "about_p2_fr", widget: "text", required: false }
+              - { label: "О враче, абзац 2 — 🇷🇺 RU", name: "about_p2_ru", widget: "text", required: false }
+              - { label: "О враче, абзац 2 — 🇬🇧 EN", name: "about_p2_en", widget: "text", required: false }
 
-              - { label: "Metoda 1 — nazwa (PL)", name: "m1_name_pl", widget: "string" }
-              - { label: "Metoda 1 — opis (PL)", name: "m1_desc_pl", widget: "text" }
-              - { label: "Méthode 1 — nom (FR)", name: "m1_name_fr", widget: "string", required: false }
-              - { label: "Méthode 1 — description (FR)", name: "m1_desc_fr", widget: "text", required: false }
-              - { label: "Метод 1 — название (RU)", name: "m1_name_ru", widget: "string", required: false }
-              - { label: "Метод 1 — описание (RU)", name: "m1_desc_ru", widget: "text", required: false }
-              - { label: "Method 1 — name (EN)", name: "m1_name_en", widget: "string", required: false }
-              - { label: "Method 1 — description (EN)", name: "m1_desc_en", widget: "text", required: false }
+              - { label: "Метод 1: название — 🇵🇱 PL (основной)", name: "m1_name_pl", widget: "string", hint: "Блок «Методы лечения» на сайте." }
+              - { label: "Метод 1: название — 🇫🇷 FR", name: "m1_name_fr", widget: "string", required: false }
+              - { label: "Метод 1: название — 🇷🇺 RU", name: "m1_name_ru", widget: "string", required: false }
+              - { label: "Метод 1: название — 🇬🇧 EN", name: "m1_name_en", widget: "string", required: false }
 
-              - { label: "Metoda 2 — nazwa (PL)", name: "m2_name_pl", widget: "string" }
-              - { label: "Metoda 2 — opis (PL)", name: "m2_desc_pl", widget: "text" }
-              - { label: "Méthode 2 — nom (FR)", name: "m2_name_fr", widget: "string", required: false }
-              - { label: "Méthode 2 — description (FR)", name: "m2_desc_fr", widget: "text", required: false }
-              - { label: "Метод 2 — название (RU)", name: "m2_name_ru", widget: "string", required: false }
-              - { label: "Метод 2 — описание (RU)", name: "m2_desc_ru", widget: "text", required: false }
-              - { label: "Method 2 — name (EN)", name: "m2_name_en", widget: "string", required: false }
-              - { label: "Method 2 — description (EN)", name: "m2_desc_en", widget: "text", required: false }
+              - { label: "Метод 1: описание — 🇵🇱 PL (основной)", name: "m1_desc_pl", widget: "text" }
+              - { label: "Метод 1: описание — 🇫🇷 FR", name: "m1_desc_fr", widget: "text", required: false }
+              - { label: "Метод 1: описание — 🇷🇺 RU", name: "m1_desc_ru", widget: "text", required: false }
+              - { label: "Метод 1: описание — 🇬🇧 EN", name: "m1_desc_en", widget: "text", required: false }
 
-              - { label: "Metoda 3 — nazwa (PL)", name: "m3_name_pl", widget: "string" }
-              - { label: "Metoda 3 — opis (PL)", name: "m3_desc_pl", widget: "text" }
-              - { label: "Méthode 3 — nom (FR)", name: "m3_name_fr", widget: "string", required: false }
-              - { label: "Méthode 3 — description (FR)", name: "m3_desc_fr", widget: "text", required: false }
-              - { label: "Метод 3 — название (RU)", name: "m3_name_ru", widget: "string", required: false }
-              - { label: "Метод 3 — описание (RU)", name: "m3_desc_ru", widget: "text", required: false }
-              - { label: "Method 3 — name (EN)", name: "m3_name_en", widget: "string", required: false }
-              - { label: "Method 3 — description (EN)", name: "m3_desc_en", widget: "text", required: false }
+              - { label: "Метод 2: название — 🇵🇱 PL (основной)", name: "m2_name_pl", widget: "string" }
+              - { label: "Метод 2: название — 🇫🇷 FR", name: "m2_name_fr", widget: "string", required: false }
+              - { label: "Метод 2: название — 🇷🇺 RU", name: "m2_name_ru", widget: "string", required: false }
+              - { label: "Метод 2: название — 🇬🇧 EN", name: "m2_name_en", widget: "string", required: false }
 
-              - { label: "Metoda 4 — nazwa (PL)", name: "m4_name_pl", widget: "string" }
-              - { label: "Metoda 4 — opis (PL)", name: "m4_desc_pl", widget: "text" }
-              - { label: "Méthode 4 — nom (FR)", name: "m4_name_fr", widget: "string", required: false }
-              - { label: "Méthode 4 — description (FR)", name: "m4_desc_fr", widget: "text", required: false }
-              - { label: "Метод 4 — название (RU)", name: "m4_name_ru", widget: "string", required: false }
-              - { label: "Метод 4 — описание (RU)", name: "m4_desc_ru", widget: "text", required: false }
-              - { label: "Method 4 — name (EN)", name: "m4_name_en", widget: "string", required: false }
-              - { label: "Method 4 — description (EN)", name: "m4_desc_en", widget: "text", required: false }
+              - { label: "Метод 2: описание — 🇵🇱 PL (основной)", name: "m2_desc_pl", widget: "text" }
+              - { label: "Метод 2: описание — 🇫🇷 FR", name: "m2_desc_fr", widget: "text", required: false }
+              - { label: "Метод 2: описание — 🇷🇺 RU", name: "m2_desc_ru", widget: "text", required: false }
+              - { label: "Метод 2: описание — 🇬🇧 EN", name: "m2_desc_en", widget: "text", required: false }
 
-              - { label: "Edukacja 1 — nagłówek (PL)", name: "edu1_year_pl", widget: "string" }
-              - { label: "Edukacja 1 — opis (PL)", name: "edu1_text_pl", widget: "text" }
-              - { label: "Éducation 1 — titre (FR)", name: "edu1_year_fr", widget: "string", required: false }
-              - { label: "Éducation 1 — description (FR)", name: "edu1_text_fr", widget: "text", required: false }
-              - { label: "Образование 1 — заголовок (RU)", name: "edu1_year_ru", widget: "string", required: false }
-              - { label: "Образование 1 — описание (RU)", name: "edu1_text_ru", widget: "text", required: false }
-              - { label: "Education 1 — title (EN)", name: "edu1_year_en", widget: "string", required: false }
-              - { label: "Education 1 — description (EN)", name: "edu1_text_en", widget: "text", required: false }
+              - { label: "Метод 3: название — 🇵🇱 PL (основной)", name: "m3_name_pl", widget: "string" }
+              - { label: "Метод 3: название — 🇫🇷 FR", name: "m3_name_fr", widget: "string", required: false }
+              - { label: "Метод 3: название — 🇷🇺 RU", name: "m3_name_ru", widget: "string", required: false }
+              - { label: "Метод 3: название — 🇬🇧 EN", name: "m3_name_en", widget: "string", required: false }
 
-              - { label: "Edukacja 2 — nagłówek (PL)", name: "edu2_year_pl", widget: "string" }
-              - { label: "Edukacja 2 — opis (PL)", name: "edu2_text_pl", widget: "text" }
-              - { label: "Éducation 2 — titre (FR)", name: "edu2_year_fr", widget: "string", required: false }
-              - { label: "Éducation 2 — description (FR)", name: "edu2_text_fr", widget: "text", required: false }
-              - { label: "Образование 2 — заголовок (RU)", name: "edu2_year_ru", widget: "string", required: false }
-              - { label: "Образование 2 — описание (RU)", name: "edu2_text_ru", widget: "text", required: false }
-              - { label: "Education 2 — title (EN)", name: "edu2_year_en", widget: "string", required: false }
-              - { label: "Education 2 — description (EN)", name: "edu2_text_en", widget: "text", required: false }
+              - { label: "Метод 3: описание — 🇵🇱 PL (основной)", name: "m3_desc_pl", widget: "text" }
+              - { label: "Метод 3: описание — 🇫🇷 FR", name: "m3_desc_fr", widget: "text", required: false }
+              - { label: "Метод 3: описание — 🇷🇺 RU", name: "m3_desc_ru", widget: "text", required: false }
+              - { label: "Метод 3: описание — 🇬🇧 EN", name: "m3_desc_en", widget: "text", required: false }
 
-              - { label: "Edukacja 3 — nagłówek (PL)", name: "edu3_year_pl", widget: "string" }
-              - { label: "Edukacja 3 — opis (PL)", name: "edu3_text_pl", widget: "text" }
-              - { label: "Éducation 3 — titre (FR)", name: "edu3_year_fr", widget: "string", required: false }
-              - { label: "Éducation 3 — description (FR)", name: "edu3_text_fr", widget: "text", required: false }
-              - { label: "Образование 3 — заголовок (RU)", name: "edu3_year_ru", widget: "string", required: false }
-              - { label: "Образование 3 — описание (RU)", name: "edu3_text_ru", widget: "text", required: false }
-              - { label: "Education 3 — title (EN)", name: "edu3_year_en", widget: "string", required: false }
-              - { label: "Education 3 — description (EN)", name: "edu3_text_en", widget: "text", required: false }
+              - { label: "Метод 4: название — 🇵🇱 PL (основной)", name: "m4_name_pl", widget: "string" }
+              - { label: "Метод 4: название — 🇫🇷 FR", name: "m4_name_fr", widget: "string", required: false }
+              - { label: "Метод 4: название — 🇷🇺 RU", name: "m4_name_ru", widget: "string", required: false }
+              - { label: "Метод 4: название — 🇬🇧 EN", name: "m4_name_en", widget: "string", required: false }
 
-              - { label: "Działalność społeczna (PL)", name: "social_text_pl", widget: "text" }
-              - { label: "Action sociale (FR)", name: "social_text_fr", widget: "text", required: false }
-              - { label: "Общественная деятельность (RU)", name: "social_text_ru", widget: "text", required: false }
-              - { label: "Social activity (EN)", name: "social_text_en", widget: "text", required: false }
+              - { label: "Метод 4: описание — 🇵🇱 PL (основной)", name: "m4_desc_pl", widget: "text" }
+              - { label: "Метод 4: описание — 🇫🇷 FR", name: "m4_desc_fr", widget: "text", required: false }
+              - { label: "Метод 4: описание — 🇷🇺 RU", name: "m4_desc_ru", widget: "text", required: false }
+              - { label: "Метод 4: описание — 🇬🇧 EN", name: "m4_desc_en", widget: "text", required: false }
 
-          - { label: "Zdjęcie profilowe (awatar)", name: "avatarUrl", widget: "image" }
+              - { label: "Образование 1: заголовок (год, учреждение) — 🇵🇱 PL (основной)", name: "edu1_year_pl", widget: "string", hint: "Блок «Образование» на сайте." }
+              - { label: "Образование 1: заголовок (год, учреждение) — 🇫🇷 FR", name: "edu1_year_fr", widget: "string", required: false }
+              - { label: "Образование 1: заголовок (год, учреждение) — 🇷🇺 RU", name: "edu1_year_ru", widget: "string", required: false }
+              - { label: "Образование 1: заголовок (год, учреждение) — 🇬🇧 EN", name: "edu1_year_en", widget: "string", required: false }
 
-          - label: "Opinie pacjentów (zatwierdzone ręcznie przez lekarza)"
+              - { label: "Образование 1: описание — 🇵🇱 PL (основной)", name: "edu1_text_pl", widget: "text" }
+              - { label: "Образование 1: описание — 🇫🇷 FR", name: "edu1_text_fr", widget: "text", required: false }
+              - { label: "Образование 1: описание — 🇷🇺 RU", name: "edu1_text_ru", widget: "text", required: false }
+              - { label: "Образование 1: описание — 🇬🇧 EN", name: "edu1_text_en", widget: "text", required: false }
+
+              - { label: "Образование 2: заголовок (год, учреждение) — 🇵🇱 PL (основной)", name: "edu2_year_pl", widget: "string" }
+              - { label: "Образование 2: заголовок (год, учреждение) — 🇫🇷 FR", name: "edu2_year_fr", widget: "string", required: false }
+              - { label: "Образование 2: заголовок (год, учреждение) — 🇷🇺 RU", name: "edu2_year_ru", widget: "string", required: false }
+              - { label: "Образование 2: заголовок (год, учреждение) — 🇬🇧 EN", name: "edu2_year_en", widget: "string", required: false }
+
+              - { label: "Образование 2: описание — 🇵🇱 PL (основной)", name: "edu2_text_pl", widget: "text" }
+              - { label: "Образование 2: описание — 🇫🇷 FR", name: "edu2_text_fr", widget: "text", required: false }
+              - { label: "Образование 2: описание — 🇷🇺 RU", name: "edu2_text_ru", widget: "text", required: false }
+              - { label: "Образование 2: описание — 🇬🇧 EN", name: "edu2_text_en", widget: "text", required: false }
+
+              - { label: "Образование 3: заголовок (год, учреждение) — 🇵🇱 PL (основной)", name: "edu3_year_pl", widget: "string" }
+              - { label: "Образование 3: заголовок (год, учреждение) — 🇫🇷 FR", name: "edu3_year_fr", widget: "string", required: false }
+              - { label: "Образование 3: заголовок (год, учреждение) — 🇷🇺 RU", name: "edu3_year_ru", widget: "string", required: false }
+              - { label: "Образование 3: заголовок (год, учреждение) — 🇬🇧 EN", name: "edu3_year_en", widget: "string", required: false }
+
+              - { label: "Образование 3: описание — 🇵🇱 PL (основной)", name: "edu3_text_pl", widget: "text" }
+              - { label: "Образование 3: описание — 🇫🇷 FR", name: "edu3_text_fr", widget: "text", required: false }
+              - { label: "Образование 3: описание — 🇷🇺 RU", name: "edu3_text_ru", widget: "text", required: false }
+              - { label: "Образование 3: описание — 🇬🇧 EN", name: "edu3_text_en", widget: "text", required: false }
+
+              - { label: "Общественная деятельность — 🇵🇱 PL (основной)", name: "social_text_pl", widget: "text" }
+              - { label: "Общественная деятельность — 🇫🇷 FR", name: "social_text_fr", widget: "text", required: false }
+              - { label: "Общественная деятельность — 🇷🇺 RU", name: "social_text_ru", widget: "text", required: false }
+              - { label: "Общественная деятельность — 🇬🇧 EN", name: "social_text_en", widget: "text", required: false }
+
+          - { label: "3. 🖼 Фото врача (аватар)", name: "avatarUrl", widget: "image", hint: "Квадратное или портретное фото лица. JPG, до 1 МБ." }
+
+          - label: "4. ⭐ Отзывы пациентов (только одобренные вами)"
             name: "reviews"
             widget: "list"
-            hint: "Nowe opinie z formularza na stronie NIE trafiają tu automatycznie — przychodzą e-mailem do zatwierdzenia. Po zatwierdzeniu wpisz je tutaj ręcznie."
+            collapsed: true
+            label_singular: "отзыв"
+            add_to_top: true
+            summary: "{{fields.author}} — {{fields.rating}}★ — {{fields.country}}"
+            hint: "Отзывы из формы на сайте сюда сами НЕ попадают: они приходят на e-mail. Если отзыв подходит, нажмите «Dodaj» и впишите его здесь. Не публикуйте данные о здоровье и фамилии пациентов."
             fields:
-              - { label: "Imię / Inicjały", name: "author", widget: "string" }
-              - label: "Kraj"
+              - { label: "Имя или инициалы", name: "author", widget: "string" }
+              - label: "Страна"
                 name: "country"
                 widget: "select"
-                options: [{ label: "🇵🇱 Polska", value: "PL" }, { label: "🇫🇷 Francja", value: "FR" }, { label: "🇷🇺 Rosja", value: "RU" }, { label: "🇬🇧 Inny", value: "EN" }]
-              - label: "Ocena"
+                options: [{ label: "🇵🇱 Польша", value: "PL" }, { label: "🇫🇷 Франция", value: "FR" }, { label: "🇷🇺 Россия", value: "RU" }, { label: "🇬🇧 Другая", value: "EN" }]
+              - label: "Оценка"
                 name: "rating"
                 widget: "select"
                 options: ["5", "4", "3"]
-              - { label: "Treść opinii", name: "text", widget: "text" }
-              - { label: "Źródło (np. 'Formularz strony', 'Google')", name: "source", widget: "string", default: "Formularz strony" }
+              - { label: "Текст отзыва", name: "text", widget: "text" }
+              - { label: "Источник", name: "source", widget: "string", default: "Formularz strony", hint: "Например: «Formularz strony» или «Google»" }
 
-          - label: "Galeria — Kabinet (photos)"
+          - label: "5. 🏥 Фотографии кабинета (галерея)"
             name: "galleryPhotos"
             widget: "list"
+            collapsed: true
+            label_singular: "фото"
+            summary: "{{fields.caption_pl}}"
             fields:
-              - { label: "Zdjęcie", name: "src", widget: "image" }
-              - { label: "Podpis (polski)", name: "caption_pl", widget: "string" }
-              - { label: "Podpis (francuski)", name: "caption_fr", widget: "string", required: false }
-              - { label: "Podpis (rosyjski)", name: "caption_ru", widget: "string", required: false }
-              - { label: "Podpis (angielski)", name: "caption_en", widget: "string", required: false }
+              - { label: "Фото", name: "src", widget: "image", hint: "Лучше JPG, не шире 1600 px и до 1 МБ. Загружайте с компьютера." }
+              - { label: "Подпись 🇵🇱 PL (основная)", name: "caption_pl", widget: "string" }
+              - { label: "Подпись 🇫🇷 FR", name: "caption_fr", widget: "string", required: false }
+              - { label: "Подпись 🇷🇺 RU", name: "caption_ru", widget: "string", required: false }
+              - { label: "Подпись 🇬🇧 EN", name: "caption_en", widget: "string", required: false }
 
-          - label: "Galeria — Dyplomy i certyfikaty"
+          - label: "6. 🎓 Дипломы и сертификаты"
             name: "galleryDocuments"
             widget: "list"
+            collapsed: true
+            label_singular: "документ"
+            summary: "{{fields.caption_pl}}"
             fields:
-              - { label: "Zdjęcie / skan", name: "src", widget: "image" }
-              - { label: "Podpis (polski)", name: "caption_pl", widget: "string" }
-              - { label: "Podpis (francuski)", name: "caption_fr", widget: "string", required: false }
-              - { label: "Podpis (rosyjski)", name: "caption_ru", widget: "string", required: false }
-              - { label: "Podpis (angielski)", name: "caption_en", widget: "string", required: false }
+              - { label: "Скан или фото документа", name: "src", widget: "image", hint: "Лучше JPG, не шире 1600 px и до 1 МБ. Загружайте с компьютера." }
+              - { label: "Подпись 🇵🇱 PL (основная)", name: "caption_pl", widget: "string" }
+              - { label: "Подпись 🇫🇷 FR", name: "caption_fr", widget: "string", required: false }
+              - { label: "Подпись 🇷🇺 RU", name: "caption_ru", widget: "string", required: false }
+              - { label: "Подпись 🇬🇧 EN", name: "caption_en", widget: "string", required: false }
 
-          - label: "Blog / linki YouTube"
+          - label: "7. ▶️ Блог и YouTube (ссылки)"
             name: "blogPosts"
             widget: "list"
+            collapsed: true
+            label_singular: "ссылку"
+            add_to_top: true
+            summary: "{{fields.title_pl}}"
             fields:
-              - label: "Typ"
+              - label: "Тип"
                 name: "type"
                 widget: "select"
-                options: ["youtube", "article"]
-              - { label: "Link (YouTube lub artykuł)", name: "url", widget: "string" }
-              - { label: "Źródło (np. YouTube, Blog)", name: "source", widget: "string" }
-              - { label: "Tytuł (polski)", name: "title_pl", widget: "string" }
-              - { label: "Tytuł (francuski)", name: "title_fr", widget: "string", required: false }
-              - { label: "Tytuł (rosyjski)", name: "title_ru", widget: "string", required: false }
-              - { label: "Tytuł (angielski)", name: "title_en", widget: "string", required: false }
-              - { label: "Opis (polski)", name: "desc_pl", widget: "text" }
-              - { label: "Opis (francuski)", name: "desc_fr", widget: "text", required: false }
-              - { label: "Opis (rosyjski)", name: "desc_ru", widget: "text", required: false }
-              - { label: "Opis (angielski)", name: "desc_en", widget: "text", required: false }
+                options: [{ label: "Видео YouTube", value: "youtube" }, { label: "Статья или пост", value: "article" }]
+              - { label: "Ссылка", name: "url", widget: "string", hint: "Скопируйте адрес видео или статьи из браузера целиком (начинается с https://)" }
+              - { label: "Источник", name: "source", widget: "string", hint: "Например: YouTube или Blog" }
+              - { label: "Заголовок 🇵🇱 PL (основной)", name: "title_pl", widget: "string" }
+              - { label: "Заголовок 🇫🇷 FR", name: "title_fr", widget: "string", required: false }
+              - { label: "Заголовок 🇷🇺 RU", name: "title_ru", widget: "string", required: false }
+              - { label: "Заголовок 🇬🇧 EN", name: "title_en", widget: "string", required: false }
+              - { label: "Описание 🇵🇱 PL (основное)", name: "desc_pl", widget: "text" }
+              - { label: "Описание 🇫🇷 FR", name: "desc_fr", widget: "text", required: false }
+              - { label: "Описание 🇷🇺 RU", name: "desc_ru", widget: "text", required: false }
+              - { label: "Описание 🇬🇧 EN", name: "desc_en", widget: "text", required: false }
